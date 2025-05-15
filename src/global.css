@@ -1,0 +1,301 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+:root {
+	--main-bg-color: #000;
+	--main-fg-color: #fff;
+	--main-ghost-hover-bg-color: rgba(255, 255, 255, 0.15);
+	--int-bg-color: #fff;
+	--int-fg-color: #000;
+	--int-hover-bg-color: #ddd;
+	--int-hover-fg-color: #000;
+	--subtle-fg-color: rgba(255, 255, 255, 0.5);
+	--border-color: #444;
+	--accent-color: rgb(16, 131, 254);
+	--accent-contrast-color: #fff;
+	--accent-hover-color: rgb(52, 150, 254);
+	--accent-ghost-hover-bg-color: rgba(16, 131, 254, 0.25);
+	--error-color: #f00;
+	--danger-color: #f00;
+	--danger-hover-color: rgb(255, 68, 68);
+	--danger-contrast-color: #fff;
+
+	--button-padding: 0.6rem;
+	--button-gap: 0.5rem;
+
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
+	accent-color: var(--accent-color);
+	color-scheme: dark light;
+	font-family: 'Inter Variable', 'Inter', sans-serif;
+	overflow-wrap: break-word;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--main-bg-color: #fff;
+		--main-fg-color: #000;
+		--int-bg-color: #000;
+		--int-fg-color: #fff;
+		--int-hover-bg-color: #222;
+		--int-hover-fg-color: #fff;
+		--subtle-fg-color: rgba(0, 0, 0, 0.5);
+
+		color-scheme: light dark;
+	}
+}
+
+:focus-visible {
+	outline: 2px solid var(--accent-color);
+	outline-offset: 2px;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	font-weight: bold;
+
+	&:not(.button):hover {
+		text-decoration: underline;
+	}
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+button,
+.button,
+.select-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: var(--button-gap);
+	cursor: pointer;
+	padding: var(--button-padding);
+	font-size: 1rem;
+	font-weight: bold;
+	border-radius: 0.75rem;
+	border: none;
+	transition:
+		background-color 0.2s ease-in-out,
+		color 0.2s ease-in-out,
+		filter 0.2s ease-in-out;
+
+	--normal-background-color: var(--int-bg-color);
+	--normal-color: var(--int-fg-color);
+	--hover-background-color: var(--int-hover-bg-color);
+	--hover-color: var(--int-hover-fg-color);
+	--active-background-color: var(--hover-background-color);
+
+	&.ghost {
+		--normal-background-color: transparent;
+		--normal-color: var(--main-fg-color);
+		--hover-background-color: var(--main-ghost-hover-bg-color);
+		--hover-color: var(--main-fg-color);
+	}
+
+	&.accent {
+		--normal-background-color: var(--accent-color);
+		--normal-color: var(--accent-contrast-color);
+		--hover-background-color: var(--accent-hover-color);
+		--hover-color: var(--accent-contrast-color);
+
+		&.ghost {
+			--normal-background-color: transparent;
+			--normal-color: var(--accent-color);
+			--hover-background-color: var(--accent-ghost-hover-bg-color);
+			--hover-color: var(--accent-color);
+		}
+	}
+
+	&.danger {
+		--normal-background-color: var(--danger-color);
+		--normal-color: var(--danger-contrast-color);
+		--hover-background-color: var(--danger-hover-color);
+		--hover-color: var(--danger-contrast-color);
+
+		&.ghost {
+			--normal-background-color: transparent;
+			--normal-color: var(--danger-color);
+			--hover-background-color: var(--danger-hover-color);
+			--hover-color: var(--danger-color);
+		}
+	}
+
+	background-color: var(--normal-background-color);
+	color: var(--normal-color);
+
+	&:where(:hover, :focus-visible, .select-container:has(> select:focus-visible)):not(:disabled) {
+		background-color: var(--hover-background-color);
+		color: var(--hover-color);
+	}
+
+	details[open] > &:where(summary) {
+		background-color: var(--active-background-color);
+	}
+
+	&:disabled {
+		cursor: not-allowed;
+		filter: brightness(0.5);
+	}
+}
+
+input[type='text'],
+input[type='search'],
+input[type='number'],
+textarea,
+select {
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
+	border: 1px solid var(--border-color);
+	border-radius: 0.75rem;
+	padding: 0.6rem;
+	font-size: 1rem;
+
+	&:focus-visible:not(:user-invalid):not(.ghost):not(.select-container.ghost > select) {
+		border-color: transparent;
+		outline-offset: 0;
+	}
+
+	.show-invalid &:user-invalid {
+		border: 1px solid var(--error-color);
+	}
+}
+
+textarea {
+	resize: none;
+	font-family: inherit;
+}
+
+select {
+	cursor: pointer;
+}
+
+option {
+	background-color: var(--main-bg-color);
+	color: var(--main-fg-color);
+}
+
+.select-container {
+	position: relative;
+	padding: 0;
+
+	&::before {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		pointer-events: none;
+	}
+
+	> select {
+		color: inherit;
+		border: none;
+		background: none;
+		width: 100%;
+		height: 100%;
+		padding: var(--button-padding);
+	}
+}
+
+label:has(> :is(input[type='checkbox'], input[type='radio'])) {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+}
+
+label > :is(input[type='checkbox'], input[type='radio']) {
+	width: 1.25rem;
+	height: 1.25rem;
+}
+
+fieldset {
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+
+	legend {
+		font-weight: bold;
+	}
+
+	> ul {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		list-style-type: none;
+		padding: 0;
+	}
+}
+
+ul {
+	padding-inline-start: 1rem;
+}
+
+[data-menu-content] {
+	padding-block: 0.5rem;
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	background-color: var(--main-bg-color);
+	display: flex;
+	flex-direction: column;
+}
+
+[data-menu-item] {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 0.75rem;
+	min-height: 2rem;
+	min-width: 9rem;
+	padding-inline: 1rem;
+	padding-block: 0.75rem;
+	cursor: pointer;
+	border-radius: 0.5rem;
+	font-weight: bold;
+	transition:
+		background-color 0.2s ease-in-out,
+		color 0.2s ease-in-out,
+		filter 0.2s ease-in-out;
+
+	&.danger {
+		color: var(--danger-color);
+	}
+
+	&:hover {
+		background-color: var(--main-ghost-hover-bg-color);
+	}
+}
+
+.checkmark-prefix::before {
+	content: '✓';
+	margin-right: 4px;
+}
+
+.spacer {
+	width: 100%;
+	min-height: 1px;
+	margin-block: 0.5rem;
+	background-color: var(--border-color);
+}
+
+.padded-container {
+	padding: 0.5rem;
+}

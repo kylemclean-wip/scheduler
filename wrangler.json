@@ -1,0 +1,12 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "scheduler",
+	"compatibility_date": "2025-01-09",
+	"pages_build_output_dir": "./svelte-kit/cloudflare",
+	"observability": {
+		"enabled": true
+	},
+	"placement": {
+		"mode": "smart"
+	}
+}
